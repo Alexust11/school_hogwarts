@@ -42,8 +42,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{count}")
-    public Student deleteStudent(@PathVariable long count) {
-        return studentService.deleteStudent(count);
+    public void  deleteStudent(@PathVariable long count) {
+        studentService.deleteStudent(count);
+
     }
 
     @GetMapping
@@ -53,7 +54,7 @@ public class StudentController {
     }
 
     @GetMapping("{age}")
-    public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
+    public ResponseEntity findStudents(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.findByAge(age));
         }
