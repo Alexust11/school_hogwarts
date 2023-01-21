@@ -42,7 +42,7 @@ public class StudentController {
     }
 
     @DeleteMapping("{count}")
-    public void  deleteStudent(@PathVariable long count) {
+    public void deleteStudent(@PathVariable long count) {
         studentService.deleteStudent(count);
 
     }
@@ -60,4 +60,11 @@ public class StudentController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping("{ageBetween}")
+    public ResponseEntity<Collection<Student>> findInBetween(@RequestParam Integer min, @RequestParam Integer max) {
+        Collection<Student> foundStudents = studentService.findStudentInBetween(min, max);
+        return ResponseEntity.ok(foundStudents);
+    }
+
 }
