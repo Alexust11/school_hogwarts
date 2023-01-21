@@ -19,7 +19,7 @@ public class StudentController {
 
 
     @GetMapping("{count}")
-    public ResponseEntity<Student> getFaculty(@PathVariable long count) {
+    public ResponseEntity<Student> getStudent(@PathVariable long count) {
         Student student = studentService.findStudent(count);
         if (student == null) {
             return ResponseEntity.notFound().build();
