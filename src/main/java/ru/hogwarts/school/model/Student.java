@@ -22,6 +22,10 @@ public class Student {
 
     }
 
+    public Student(String timur, int i) {
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,7 +54,7 @@ public class Student {
         this.name = name;
     }
 
-    public int getAge(int i) {
+    public int getAge() {
         return age;
     }
 
