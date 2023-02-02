@@ -16,12 +16,8 @@ CREATE TABLE cars (
                       model VARCHAR(40) NOT NULL,
                       cost MONEY NOT NULL
 );
-
 ALTER TABLE cars
     ADD CONSTRAINT cars_unique UNIQUE (brand, model);
-
-
-
 
 SELECT s.name, s.age, f.name
 FROM student s
