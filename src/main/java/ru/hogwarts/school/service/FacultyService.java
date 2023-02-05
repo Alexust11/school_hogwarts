@@ -1,14 +1,13 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.Exception.EntityNotFoundMyException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 
 @Service
 public class FacultyService {
@@ -25,7 +24,8 @@ public class FacultyService {
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.findById(id).get();
+
+           return facultyRepository.findById(id).orElseThrow(()-> new EntityNotFoundMyException("Факультета с таким id нет. id-"+id));
     }
 
     public Faculty editFaculty(Faculty faculty) {

@@ -21,9 +21,6 @@ public class FacultyController {
     @GetMapping("{count}")
     public ResponseEntity<Faculty> getFaculty(@PathVariable long count) {
         Faculty faculty = facultyService.findFaculty(count);
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(faculty);
     }
 
@@ -35,9 +32,7 @@ public class FacultyController {
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
-        if (foundFaculty == null) {
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.ok(foundFaculty);
     }
 
