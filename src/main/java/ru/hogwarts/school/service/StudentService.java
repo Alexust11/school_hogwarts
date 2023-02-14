@@ -12,6 +12,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,6 +77,29 @@ public class StudentService {
         logger.info("Вызван метод вывода среднего возраста студентов");
         return this.studentRepository.getStudentsAgeAverage();
     }
+
+    public Collection<String> getAllStudentsStartingLetterA() {
+        logger.info("Вызван метод выводы имен студентов в верхем регистре чьи имена начинаются на А");
+        Collection<Student> students = this.getAllStudents();
+        return students.stream()
+                .parallel()
+                .map(e -> e.getName().toUpperCase(Locale.ROOT))
+                .filter(e -> e.startsWith("A"))
+                .sorted().toList();
+    }
+
+    public Double getAverageAge() {
+        logger.info("Вызван метод подсчета среднего возраста студентов");
+        Collection<Student> students = this.getAllStudents();
+        return students.stream()
+                .parallel()
+                .mapToInt(e -> e.getAge())
+                .average()
+                .orElse(0);
+    }
+
+
+
     public Collection<Student> getFiveLastStudents()
     {
         logger.info("Вызван метод вывода пяти последних студентов");

@@ -134,4 +134,16 @@ public class StudentController {
         return studentService.getFiveLastStudents();
     }
 
+    @GetMapping("all_student_name_A")
+    public ResponseEntity<Collection<String>> getAllStudentsStartingLetterA() {
+        Collection<String> studentNames = studentService.getAllStudentsStartingLetterA();
+        return ResponseEntity.ok(studentNames);
+    }
+
+    @GetMapping("average_age_stream")
+    public ResponseEntity<Double> getAverageAge() {
+        Double averageAge = studentService.getAverageAge();
+        return ResponseEntity.ok(averageAge);
+    }
+
 }
