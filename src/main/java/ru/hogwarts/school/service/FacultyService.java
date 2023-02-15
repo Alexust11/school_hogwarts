@@ -72,16 +72,16 @@ public class FacultyService {
                 .reduce("", (a, b) -> a.length() > b.length() ? a : b);
     }
     public ResponseEntity<Integer> calculateFormula() {
-        logger.info("Was invoked method for calculate formula from task");
+        logger.info("Вызов метода расчета суммы по формуле");
 
         long start = System.nanoTime();
         Integer result = Stream.iterate(1, a -> a + 1)
-                .limit(100_000_000)
+                .limit(1000000)
                 .parallel()
                 .reduce(0, (a, b) -> a + b);
         long finish = System.nanoTime();
         long elapsed = finish - start; //
-
+        System.out.println(elapsed);
         return ResponseEntity.ok(result);
     }
 
