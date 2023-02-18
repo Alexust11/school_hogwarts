@@ -76,8 +76,8 @@ public class FacultyService {
 
         long start = System.nanoTime();
         Integer result = Stream.iterate(1, a -> a + 1)
-                .limit(1000000)
-                .parallel()
+//                .parallel()
+                .limit(10_000_0000)
                 .reduce(0, (a, b) -> a + b);
         long finish = System.nanoTime();
         long elapsed = finish - start; //

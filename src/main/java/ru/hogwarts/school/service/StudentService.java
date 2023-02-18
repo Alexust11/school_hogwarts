@@ -12,6 +12,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
+    private Integer numberStudent = 0;
     Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
@@ -104,4 +106,67 @@ public class StudentService {
         logger.info("Вызван метод вывода пяти последних студентов");
         return studentRepository.getFiveLastStudents();
     }
+    public void printStudentsThreads() {
+        logger.info("Вызван метод для печати нескольких студентов в разных потоках");
+        List<Student> students = new ArrayList<>(this.getAllStudents());
+
+        new Thread(() -> {
+            printStudent(students, "Поток 1", 2);
+            printStudent(students, "Поток 1", 3);
+        }).start();
+
+        new Thread(() -> {
+            printStudent(students, "Поток 2", 4);
+            printStudent(students, "Поток 2", 5);
+        }).start();
+
+        printStudent(students, "Поток 0", 0);
+        printStudent(students, "Поток 0", 1);
+    }
+
+    private void printStudent(List<Student> students, String message, int number) {
+        System.out.println(message + ": #" + number + ": " + students.get(number).getName());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printFewStudentsThreadsSync() {
+        logger.info("Вызван метод для печати нескольких учащихся в разных синхронизированных потоках");
+        List<Student> students = new ArrayList<>(this.getAllStudents());
+
+        Thread thread1 = new Thread(() -> {
+            printStudentSync(students, "Поток 1", 2);
+            printStudentSync(students, "Поток 1", 3);
+        });
+        thread1.start();
+
+        Thread thread2 = new Thread(() -> {
+            printStudentSync(students, "Поток 2", 4);
+            printStudentSync(students, "Поток 2", 5);
+        });
+        thread2.start();
+
+        printStudentSync(students, "Поток 0", 0);
+        printStudentSync(students, "Поток 0", 1);
+    }
+
+    private void printStudentSync(List<Student> students, String message, int number) {
+        while (numberStudent != number) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        synchronized (numberStudent) {
+            System.out.println(message + ". Порядковый номер студента в таблице" + number + ": " + students.get(number).getName());
+            numberStudent++;
+        }
+    }
+
+
 }

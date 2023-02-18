@@ -146,4 +146,15 @@ public class StudentController {
         return ResponseEntity.ok(averageAge);
     }
 
+    @GetMapping("print_students_thread")
+    public void printFewStudentsInThreads() {
+        studentService.printStudentsThreads();
+    }
+
+
+      @GetMapping("print_students_thread_sync")
+    public void printFewStudentsInThreadsSync() {
+        studentService.printFewStudentsThreadsSync();
+    }
+
 }
